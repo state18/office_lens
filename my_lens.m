@@ -15,8 +15,8 @@ MRo = mean(gray_im,2);
 %  figure
 %  bar(MRo, 'r')
 
-possibleLeftBounds = 1;
-possibleRightBounds = Co;
+possibleLeftBounds = [1, MCo(1)];
+possibleRightBounds = [Co, MCo(Co)];
 
 lowerBounds = 1;
 upperBounds = Ro;
@@ -28,7 +28,7 @@ stepSize = 30
 tolerance = 25
 previousCell = 1
 
-for c = 1:stepSize:Co
+for c = 2:stepSize:Co
     differenceBetweenCells = MCo(c) - MCo(previousCell);
     if (differenceBetweenCells > tolerance)
        possibleLeftBounds(end + 1,1:2) = [previousCell, MCo(previousCell)]
@@ -40,6 +40,19 @@ for c = 1:stepSize:Co
     
     previousCell = c;
 end
+
+if (size(possibleLeftBounds) > 1)
+   disp 'found left bounds.' 
+else
+   disp 'Left bounds not found.'
+end
+
+if (size(possibleRightBounds) > 1)
+   disp 'found right bounds.' 
+else
+    disp 'Right bounds not found.'
+end
+
 
 % % Original code that equalizes the image
 % % convert to grayscale
